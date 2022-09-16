@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Friends Application</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="header__title">Friends Application</h1>
+    </header>
+    <main class="container">
+      <form class="options">
+        <div class="options__sorting">
+          <p>Sort by name</p>
+          <input
+            checked
+            type="radio"
+            name="sorting"
+            id="name-AtoZ"
+            class="options__sorting-radio"
+          />
+          <label for="name-down" class="options__label">A-Z</label>
+          <input
+            type="radio"
+            name="sorting"
+            id="name-ZtoA"
+            class="options__sorting-radio"
+          />
+          <label for="name-up" class="options__label">Z-A</label>
+        </div>
+        <div class="options__sorting">
+          <p>Sort by age</p>
+          <input
+            type="radio"
+            name="sorting"
+            id="age-decrease"
+            class="options__sorting-radio"
+          />
+          <label for="age-decrease" class="options__label"> Age ↓</label>
+          <input
+            type="radio"
+            name="sorting"
+            id="age-increase"
+            class="options__sorting-radio"
+          />
+          <label for="age-increase" class="options__label"> Age ↑</label>
+        </div>
+        <!-- <hr ------------------------ /> -->
+        <div class="options__gender-filter">
+          <p>Gender Filtering</p>
+          <input
+            type="radio"
+            name="gender"
+            id="gender-male"
+            class="options__sorting-radio"
+          />
+          <label for="gender-male" class="options__label"> Male </label>
+          <input
+            type="radio"
+            name="gender"
+            id="gender-female"
+            class="options__sorting-radio"
+          />
+          <label for="gender-female" class="options__label"> Female </label>
+          <input
+            checked
+            type="radio"
+            name="gender"
+            id="gender-all"
+            class="options__sorting-radio"
+          />
+          <label for="gender-all" class="options__label"> All </label>
+        </div>
+
+        <input
+          type="text"
+          name="search"
+          placeholder="Type name of the user..."
+          class="form__search-control"
+        />
+
+        <!-- <input class="options__reset-button" value="RESET" type="button" /> -->
+      </form>
+      <div class="friends"></div>
+    </main>
+
+    <script src="./js/script.js"></script>
+  </body>
+</html>
