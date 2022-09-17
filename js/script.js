@@ -1,12 +1,14 @@
-// "use strict";
+"use strict";
 const URL =
-  "https://randomuser.me/api/?results=15&nat=ua&inc=gender,name,dob,location,picture";
+  "https://randomuser.me/api/?results=25&nat=ua&inc=gender,name,dob,location,picture";
 
 const usersArea = document.querySelector(".friends");
 const genderFilter = document.querySelector(".options__gender-filter");
 genderFilter.addEventListener("click", clickFiltering);
-const ageNameSorting = document.querySelector(".options");
-ageNameSorting.addEventListener("click", clickSorting);
+const ageNameSorting = document.querySelector(".options__sorting");
+ageNameSorting.addEventListener("click", sortingArray);
+const searchNameFilter = document.querySelector(".options__search");
+searchNameFilter.addEventListener("input", clickFiltering);
 
 const isMale = document.querySelector("#gender-male");
 const isFemale = document.querySelector("#gender-female");
@@ -23,7 +25,7 @@ let resultingFriendsArray = [];
 async function getData(url) {
   let response = await fetch(url);
   if (response.ok) {
-    let users = await response.json();
+    const users = await response.json();
     initialFriendsArray = users.results;
   } else {
     alert("Error HTTP: " + response.status);
@@ -50,26 +52,23 @@ function showFriends(friendsArray) {
   }
 }
 
-function clickFiltering(event) {
+function clickFiltering() {
   switch (true) {
     case isMale.checked:
       resultingFriendsArray = filterMale(initialFriendsArray);
-      showFriends(resultingFriendsArray);
-      sortingArray(resultingFriendsArray);
       break;
     case isFemale.checked:
       resultingFriendsArray = filterFemale(initialFriendsArray);
-      showFriends(resultingFriendsArray);
-      sortingArray(resultingFriendsArray);
       break;
     case isAll.checked:
       resultingFriendsArray = initialFriendsArray;
-      showFriends(resultingFriendsArray);
-      sortingArray(resultingFriendsArray);
       break;
     default:
       break;
   }
+  resultingFriendsArray = searchNameinArray(resultingFriendsArray);
+  //   showFriends(resultingFriendsArray);
+  sortingArray(resultingFriendsArray);
 }
 
 function sortingArray() {
@@ -83,39 +82,43 @@ function sortingArray() {
     case ageIncrease.checked:
       showFriends(sortAgeIncrease(resultingFriendsArray));
       break;
-    case ageIncrease.checked:
+    case ageDecrease.checked:
       showFriends(sortAgeDecrease(resultingFriendsArray));
       break;
   }
 }
 
-function clickSorting() {
-  sortingArray();
-}
-
 function sortAgeIncrease(friendsArray) {
-  const users = [...friendsArray];
-  return users.sort((a, b) => a.dob.age - b.dob.age);
+  return friendsArray.sort((a, b) => a.dob.age - b.dob.age);
 }
 function sortAgeDecrease(friendsArray) {
-  const users = [...friendsArray];
-  return users.sort((a, b) => b.dob.age - a.dob.age);
+  return friendsArray.sort((a, b) => b.dob.age - a.dob.age);
 }
 function sortNameAtoZ(friendsArray) {
-  const users = [...friendsArray];
-  return users.sort((a, b) => a.name.last.localeCompare(b.name.last));
+  return friendsArray.sort((a, b) => a.name.last.localeCompare(b.name.last));
 }
 function sortNameZtoA(friendsArray) {
-  const users = [...friendsArray];
-  return users.sort((a, b) => b.name.last.localeCompare(a.name.last));
+  return friendsArray.sort((a, b) => b.name.last.localeCompare(a.name.last));
 }
 function filterMale(friendsArray) {
-  const users = [...friendsArray];
-  return users.filter((user) => user.gender === "male");
+  return friendsArray.filter((user) => user.gender === "male");
 }
 function filterFemale(friendsArray) {
-  const users = [...friendsArray];
-  return users.filter((user) => user.gender === "female");
+  return friendsArray.filter((user) => user.gender === "female");
+}
+
+function searchNameinArray(friendsArray) {
+  return friendsArray.filter(
+    (user) =>
+      user.name.last
+        .toLowerCase()
+        .includes(searchNameFilter.value.toLowerCase()) ||
+      user.name.first
+        .toLowerCase()
+        .includes(searchNameFilter.value.toLowerCase())
+  );
 }
 
 getData(URL).then(initial).then(sortingArray);
+
+console.log(window.history);

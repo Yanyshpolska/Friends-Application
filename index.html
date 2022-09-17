@@ -30,8 +30,7 @@
             class="options__sorting-radio"
           />
           <label for="name-up" class="options__label">Z-A</label>
-        </div>
-        <div class="options__sorting">
+
           <p>Sort by age</p>
           <input
             type="radio"
@@ -76,10 +75,12 @@
         </div>
 
         <input
-          type="text"
+          onkeydown="return event.key != 'Enter';"
+          autocomplete="off"
+          type="search"
           name="search"
-          placeholder="Type name of the user..."
-          class="form__search-control"
+          placeholder="Type name..."
+          class="options__search"
         />
 
         <!-- <input class="options__reset-button" value="RESET" type="button" /> -->
