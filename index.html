@@ -9,70 +9,79 @@
   </head>
   <body>
     <header class="header">
-      <h1 class="header__title">Friends Application</h1>
+      <h1 class="header__title">Friends from Ukraine</h1>
     </header>
     <main class="container">
       <form class="options">
         <div class="options__sorting">
-          <p>Sort by:</p>
-          <p>Name</p>
-          <input
-            checked
-            type="radio"
-            name="sorting"
-            id="name-AtoZ"
-            class="options__sorting-radio"
-          />
-          <label for="name-AtoZ" class="options__label">A-Z</label>
-          <input
-            type="radio"
-            name="sorting"
-            id="name-ZtoA"
-            class="options__sorting-radio"
-          />
-          <label for="name-ZtoA" class="options__label">Z-A</label>
-
-          <p>Age</p>
-          <input
-            type="radio"
-            name="sorting"
-            id="age-decrease"
-            class="options__sorting-radio"
-          />
-          <label for="age-decrease" class="options__label"> Age ↓</label>
-          <input
-            type="radio"
-            name="sorting"
-            id="age-increase"
-            class="options__sorting-radio"
-          />
-          <label for="age-increase" class="options__label"> Age ↑</label>
+          <div class="options__sorting-item">
+            <span class="options__name">Name</span>
+            <div>
+              <input
+                checked
+                type="radio"
+                name="sorting"
+                id="name-AtoZ"
+                class="options__sorting-radio"
+              />
+              <label for="name-AtoZ" class="options__label">&#8595;</label>
+              <input
+                type="radio"
+                name="sorting"
+                id="name-ZtoA"
+                class="options__sorting-radio"
+              />
+              <label for="name-ZtoA" class="options__label">&#8593;</label>
+            </div>
+          </div>
+          <div class="options__sorting-item">
+            <span class="options__name">Age</span>
+            <div>
+              <input
+                type="radio"
+                name="sorting"
+                id="age-decrease"
+                class="options__sorting-radio"
+              />
+              <label for="age-decrease" class="options__label"> &#8595;</label>
+              <input
+                type="radio"
+                name="sorting"
+                id="age-increase"
+                class="options__sorting-radio"
+              />
+              <label for="age-increase" class="options__label"> &#8593;</label>
+            </div>
+          </div>
         </div>
-        <!-- <hr ------------------------ /> -->
         <div class="options__gender-filter">
-          <p>Gender Filtering</p>
-          <input
-            type="radio"
-            name="gender"
-            id="gender-male"
-            class="options__sorting-radio"
-          />
-          <label for="gender-male" class="options__label"> Male </label>
-          <input
-            type="radio"
-            name="gender"
-            id="gender-female"
-            class="options__sorting-radio"
-          />
-          <label for="gender-female" class="options__label"> Female </label>
-          <input
-            checked
-            type="radio"
-            name="gender"
-            id="gender-all"
-            class="options__sorting-radio"
-          />
-          <label for="gender-all" class="options__label"> All </label>
+          <div class="options__sorting-item">
+            <span class="options__name">Sex</span>
+            <div>
+              <input
+                type="radio"
+                name="gender"
+                id="male"
+                class="options__sorting-radio"
+              />
+              <label for="male" class="options__label"> M </label>
+              <input
+                type="radio"
+                name="gender"
+                id="female"
+                class="options__sorting-radio"
+              />
+              <label for="female" class="options__label"> F </label>
+              <input
+                checked
+                type="radio"
+                name="gender"
+                id="gender-all"
+                class="options__sorting-radio"
+              />
+              <label for="gender-all" class="options__label"> &#9893; </label>
+            </div>
+          </div>
         </div>
 
         <input
@@ -83,8 +92,6 @@
           placeholder="Type name..."
           class="options__search"
         />
-
-        <!-- <input class="options__reset-button" value="RESET" type="button" /> -->
       </form>
       <div class="friends"></div>
     </main>

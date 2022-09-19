@@ -19,7 +19,10 @@ input {
   font-size: inherit;
   padding: 5px;
 }
-
+input:focus {
+  outline: none;
+  border: 2px solid #684a4a;
+}
 .header {
   max-width: 1000px;
   margin: auto;
@@ -37,23 +40,42 @@ input {
 
 .options {
   flex: 0 0 260px;
-  /* flex!!! */
   background-color: #684a4a40;
   height: 220px;
-  /* height!!! */
   border-radius: 20px 0;
   border: 2px solid #684a4a;
-  margin: 0.5rem;
+  margin: 0.5rem 0 0.5rem 0.5rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
 }
-.options__sorting > p {
-  font-size: 20px;
+.options__sorting-item {
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+}
+.options__sorting-radio:checked + .options__label {
+  color: #e73535;
 }
 
-.options__sorting-radio,
+.options__name {
+  padding-top: 10px;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.options__sorting-radio {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
 .options__label {
+  font-weight: bolder;
+  font-size: 30px;
   cursor: pointer;
   user-select: none;
 }
@@ -63,17 +85,18 @@ input {
 }
 
 .friends {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 32%);
+  gap: 0.5rem;
+  padding: 0.5rem 0 0 0.5rem;
 }
 .user {
-  flex: 0 1 31%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0.5rem 1%;
   background-color: #684a4a40;
   border: 2px solid #684a4a;
   border-radius: 20px 0px;
@@ -97,8 +120,8 @@ input {
   font-weight: 800;
 }
 @media (max-width: 850px) {
-  .user {
-    flex: 0 1 48%;
+  .friends {
+    grid-template-columns: repeat(2, 49%);
   }
 }
 
@@ -108,15 +131,15 @@ input {
   }
   .options {
     flex: 0 0 220px;
-    /* px!!! */
+    margin: 0.5rem;
   }
-  .user {
-    flex: 0 1 31%;
+  .friends {
+    grid-template-columns: repeat(3, 32%);
   }
 }
 @media (max-width: 620px) {
-  .user {
-    flex: 0 1 48%;
+  .friends {
+    grid-template-columns: repeat(2, 49%);
   }
 }
 @media (max-width: 400px) {
