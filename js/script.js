@@ -1,89 +1,86 @@
 "use strict";
-const URL =
-  "https://randomuser.me/api/?results=25&nat=ua&inc=gender,name,dob,location,picture";
 
 const usersArea = document.querySelector(".friends");
-const genderFilter = document.querySelector(".options__gender-filter");
-genderFilter.addEventListener("click", clickFiltering);
-const ageNameSorting = document.querySelector(".options__sorting");
-ageNameSorting.addEventListener("click", sortingArray);
+const friendsForm = document.querySelector(".options");
+friendsForm.addEventListener("change", doFiltering);
+
 const searchNameFilter = document.querySelector(".options__search");
-searchNameFilter.addEventListener("input", clickFiltering);
+searchNameFilter.addEventListener("input", doFiltering);
 
-const isMale = document.querySelector("#gender-male");
-const isFemale = document.querySelector("#gender-female");
-const isAll = document.querySelector("#gender-all");
+let initialFriendsSet = [];
+let resultingFriendsSet = [];
 
-const ageIncrease = document.querySelector("#age-increase");
-const ageDecrease = document.querySelector("#age-decrease");
-const nameAtoZ = document.querySelector("#name-AtoZ");
-const nameZtoA = document.querySelector("#name-ZtoA");
-
-let initialFriendsArray = [];
-let resultingFriendsArray = [];
-
-async function getData(url) {
+async function getData() {
+  const url =
+    "https://randomuser.me/api/?results=24&nat=ua&inc=gender,name,dob,location,picture";
   let response = await fetch(url);
   if (response.ok) {
     const users = await response.json();
-    initialFriendsArray = users.results;
+    initialFriendsSet = users.results;
   } else {
-    alert("Error HTTP: " + response.status);
+    throw Error(response.statusText);
   }
 }
 
 function initial() {
-  resultingFriendsArray = initialFriendsArray;
-  showFriends(resultingFriendsArray);
+  resultingFriendsSet = initialFriendsSet;
+  showFriends(resultingFriendsSet);
 }
 
 function showFriends(friendsArray) {
   usersArea.innerHTML = "";
   for (let user of friendsArray) {
-    const userCard = document.createElement("div");
-    userCard.classList.add("user");
-    userCard.innerHTML = `<div class="user__photo" style="
+    const userCard = `<div class="user"> 
+	<div class="user__photo" style="
 		  background: url(${user.picture.large}) 0 0/cover no-repeat;
 		"></div>
 		 <span class="user__name">${user.name.last} ${user.name.first}</span>
 		 <span class="user__info">${user.location.city}</span>
-		 <span class="user__info">${user.gender}, ${user.dob.age}</span>`;
-    usersArea.append(userCard);
+		 <span class="user__info">${user.gender}, ${user.dob.age}</span>
+	</div>`;
+    usersArea.innerHTML += userCard;
   }
 }
 
-function clickFiltering() {
+function doFiltering() {
+  const isMale = document.querySelector("#male");
+  const isFemale = document.querySelector("#female");
+  const isAll = document.querySelector("#gender-all");
+
   switch (true) {
     case isMale.checked:
-      resultingFriendsArray = filterMale(initialFriendsArray);
+      resultingFriendsSet = filterGender(initialFriendsSet, isMale.id);
       break;
     case isFemale.checked:
-      resultingFriendsArray = filterFemale(initialFriendsArray);
+      resultingFriendsSet = filterGender(initialFriendsSet, isFemale.id);
       break;
     case isAll.checked:
-      resultingFriendsArray = initialFriendsArray;
+      resultingFriendsSet = initialFriendsSet;
       break;
     default:
       break;
   }
-  resultingFriendsArray = searchNameinArray(resultingFriendsArray);
-  //   showFriends(resultingFriendsArray);
-  sortingArray(resultingFriendsArray);
+  resultingFriendsSet = searchNameinArray(resultingFriendsSet);
+  sortingArray(resultingFriendsSet);
 }
 
 function sortingArray() {
+  const ageIncrease = document.querySelector("#age-increase");
+  const ageDecrease = document.querySelector("#age-decrease");
+  const nameAtoZ = document.querySelector("#name-AtoZ");
+  const nameZtoA = document.querySelector("#name-ZtoA");
   switch (true) {
     case nameAtoZ.checked:
-      showFriends(sortNameAtoZ(resultingFriendsArray));
+      showFriends(sortNameAtoZ(resultingFriendsSet));
       break;
     case nameZtoA.checked:
-      showFriends(sortNameZtoA(resultingFriendsArray));
+      showFriends(sortNameZtoA(resultingFriendsSet));
       break;
     case ageIncrease.checked:
-      showFriends(sortAgeIncrease(resultingFriendsArray));
+      showFriends(sortAgeIncrease(resultingFriendsSet));
       break;
     case ageDecrease.checked:
-      showFriends(sortAgeDecrease(resultingFriendsArray));
+      showFriends(sortAgeDecrease(resultingFriendsSet));
       break;
   }
 }
@@ -100,11 +97,8 @@ function sortNameAtoZ(friendsArray) {
 function sortNameZtoA(friendsArray) {
   return friendsArray.sort((a, b) => b.name.last.localeCompare(a.name.last));
 }
-function filterMale(friendsArray) {
-  return friendsArray.filter((user) => user.gender === "male");
-}
-function filterFemale(friendsArray) {
-  return friendsArray.filter((user) => user.gender === "female");
+function filterGender(friendsArray, gender) {
+  return friendsArray.filter((user) => user.gender === gender);
 }
 
 function searchNameinArray(friendsArray) {
@@ -119,6 +113,4 @@ function searchNameinArray(friendsArray) {
   );
 }
 
-getData(URL).then(initial).then(sortingArray);
-
-console.log(window.history);
+getData().then(initial).then(sortingArray);
